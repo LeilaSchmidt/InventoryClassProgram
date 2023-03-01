@@ -27,24 +27,20 @@ namespace ConsoleApp1
             return;
         }
 
-        public static void countInitialization(int index, List<Inventory> myList)
-        {
-
-            Console.WriteLine("How many of this item do you have?");
-            int amount = Convert.ToInt32(Console.ReadLine());
-
-            myList[index].count = amount;
-            Console.WriteLine("Item: " + myList[index].name + ", now has a count of: " + myList[index].count);
-        }
-
         public static void updateCount(List<Inventory> myList)
         {
             Console.WriteLine("\nwhich item would you like to update?");
             var index = Console.ReadLine();
             int intIndex = Convert.ToInt32(index);
 
+            while(intIndex > myList.Count())
+            {
+                Console.WriteLine("I'm sorry, there is no item at that number, please enter a valid item's number.");
+                index = Console.ReadLine();
+                intIndex = Convert.ToInt32(index);
+            }
 
-            Console.WriteLine("How many would you like to add or remove?");
+            Console.WriteLine("How many would you like to add or remove to the count of this item?");
             int amount = Convert.ToInt32(Console.ReadLine());
 
             myList[intIndex].count += amount;
@@ -59,7 +55,5 @@ namespace ConsoleApp1
                 Console.WriteLine(i + ": " + myList[i].name + " has a count of: " + myList[i].count);
             }
         }
-
-
     }
 }
