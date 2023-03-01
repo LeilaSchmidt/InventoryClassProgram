@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Linq;
+using System;
 
 namespace ConsoleApp1
 {
@@ -7,38 +9,61 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            List<Inventory> listOfObjs = new List<Inventory>();
+            Console.WriteLine("Add the item you would like to add to the list,\nor type 'stop' to get the current list of already entered items.\n");
             while (true)
             {
-                List<Inventory> listOfObjs = new List<Inventory>();
-
-                Console.WriteLine("What item would you like to add to the inventory?");
+                Console.WriteLine("Please enter your item");
                 string item = Console.ReadLine();
-                Console.WriteLine("How many of this item do you have?");
-                int count = Convert.ToInt32(Console.ReadLine());
 
-                Console.WriteLine(Inventory.numberOfItemsCreated);
-
-                Inventory item1 = new Inventory(item, count);
-
-                item1.displayTest();
-
-                foreach (Inventory items in listOfObjs)
-                {
-                    Console.WriteLine("There are " + items.count);
-                }
-
-                Console.WriteLine("Do you wish to create another item?");
-                string cont = Console.ReadLine();
-                if (cont == "no")
+                if (item.ToLower() == "stop")
                 {
                     Console.WriteLine("The items you created were:");
-                    foreach (Inventory items in listOfObjs)
+                    for (int i = 0; i < listOfObjs.Count; i++)
                     {
-                        Console.WriteLine(items.count + " " + items.name);
+                        Console.WriteLine(i + " " + listOfObjs[i].name);
                     }
                     break;
                 }
+                else
+                {
+                    Inventory item1 = new Inventory(item);
+                    listOfObjs.Add(item1);
+                }
             }
+
+
+            do
+            {
+                //enter the values or exit
+                Console.WriteLine("Type 'stop' to stop, or enter the index of the item you wish to change.");
+                var itemIndex = Console.ReadLine();
+
+                if (itemIndex.ToLower() == "stop")
+                {
+                    Inventory.displayFinalOutput(listOfObjs);
+                    break;
+                }
+                int updateIndex = Convert.ToInt32(itemIndex);
+                Inventory.countInitialization(updateIndex, listOfObjs);
+
+
+            } while (true);
+
+            //update or show the final output
+            Console.WriteLine("If you made a mistake and wish to update the count of an item, type 'update'.\nOtherwise, type 'exit' to have the final items and their counts displayed");
+            var update = Console.ReadLine();
+
+            if (update.ToLower() == "stop")
+            {
+                Inventory.displayFinalOutput(listOfObjs);
+            }
+            else if (update.ToLower() == "update")
+            {
+                Inventory.updateCount(listOfObjs);
+            }
+
+            Console.WriteLine("Goodbye");
         }
     }
 }
