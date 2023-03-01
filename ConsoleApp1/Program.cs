@@ -32,37 +32,27 @@ namespace ConsoleApp1
                 }
             }
 
-
             do
             {
-                //enter the values or exit
-                Console.WriteLine("Type 'stop' to stop, or enter the index of the item you wish to change.");
-                var itemIndex = Console.ReadLine();
+                //update or show the final output
+                Console.WriteLine("To update the count of an item, type 'update'.\nOtherwise, type 'exit' to have the final items and their counts displayed");
+                var update = Console.ReadLine();
 
-                if (itemIndex.ToLower() == "stop")
+                if (update.ToLower() == "exit")
                 {
                     Inventory.displayFinalOutput(listOfObjs);
                     break;
                 }
-                int updateIndex = Convert.ToInt32(itemIndex);
-                Inventory.countInitialization(updateIndex, listOfObjs);
-
+                else if (update.ToLower() == "update")
+                {
+                    Inventory.updateCount(listOfObjs);
+                }
+                else
+                {
+                    Console.WriteLine("I'm sorry, I didn't understand that input, please try again.");
+                }
 
             } while (true);
-
-            //update or show the final output
-            Console.WriteLine("If you made a mistake and wish to update the count of an item, type 'update'.\nOtherwise, type 'exit' to have the final items and their counts displayed");
-            var update = Console.ReadLine();
-
-            if (update.ToLower() == "stop")
-            {
-                Inventory.displayFinalOutput(listOfObjs);
-            }
-            else if (update.ToLower() == "update")
-            {
-                Inventory.updateCount(listOfObjs);
-            }
-
             Console.WriteLine("Goodbye");
         }
     }
